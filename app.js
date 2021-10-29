@@ -45,6 +45,10 @@ app.get('/chats', (req, res) => {
     res.end();
 });
 
+app.get('/rasm',(req,res)=>{
+    res.sendFile(__dirname+'/img.jpg')
+})
+
 app.post('/chats/:index', (req, res) => {
    
     myList[req.params.index].comment.push({
@@ -56,7 +60,7 @@ app.post('/chats/:index', (req, res) => {
 });
 
 
-app.listen(process.env.PORT || 3000, () => console.log("Server 3000 portida ishlayapti !!"));
+app.listen(process.env.PORT || 5000, () => console.log("Server 3000 portida ishlayapti !!"));
 
 
 
@@ -133,3 +137,4 @@ app.listen(process.env.PORT || 3000, () => console.log("Server 3000 portida ishl
 // app.listen(port, () => console.log("Example app listening on 3000 port!"))
 
 
+//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
