@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer')
 const app = express();
 var myList=[
     {
@@ -33,108 +34,49 @@ var myList=[
     }
     
 ];
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './my-uploads')
+    },
+    filename: function (req, file, cb) {
+      req.originalFileName = file.originalname
+      cb(null, file.originalname)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
+
 app.use(express.urlencoded({
     extended: true
 }));
 app.use(express.json());
 
-
-app.get('/chats', (req, res) => {
+app.use('/audio',express.static('./my-uploads'))
+app.get('/', (req, res) => {
     res.send(myList);
-    console.log(req.app.locals.settings.etag);
     res.end();
 });
 
-app.get('/rasm',(req,res)=>{
-    res.sendFile(__dirname+'/img.jpg')
-})
-
-app.post('/chats/:index', (req, res) => {
+app.post('/:id/audio', (req, res) => {
    
-    myList[req.params.index].comment.push({
+    myList[req.params.id].comment.push({
                name:req.body.name,
-               chat:req.body.chat,
+               type:"audio",
+               data:'https://bek-chat-app.herokuapp.com/audio/'+req.originalFileName,
+               time:req.body.time,
+           });
+    res.end();
+});
+app.post('/:id/chat', (req, res) => {
+   
+    myList[req.params.id].comment.push({
+               name:req.body.name,
+               type:"chat",
+               data:req.body.data,
                time:req.body.time,
            });
     res.end();
 });
 
-
-app.listen(process.env.PORT || 5000, () => console.log("Server 3000 portida ishlayapti !!"));
-
-
-
-
-
-
-
-
-
-// const { log } = require('console');
-// const express = require('express');
-// const { request } = require('http');
-// const app = express()
-// const port = 3000
-
-// app.use(express.json())
-// app.use(express.urlencoded({
-//     extended:true
-// }))
-// myList=[
-//     {
-//         comments:[],
-//         channel_name:"Kursdoshlar"
-//     },
-//     {
-//         comments:[],
-//         channel_name:"Sinfdoshlar"
-//     },
-//     {
-//         comments:[],
-//         channel_name:"Qarindoshlar"
-//     },
-//     {
-//         comments:[],
-//         channel_name:"Do'stlar"
-//     },
-// ];
-
-// app.get('/channels', (req, res) =>{
-//     var list1=[];
-//     myList.forEach(element => {
-//         list1.push(element.channel_name);
-//     });
-//     res.json(list1);
-// });
-// app.get('/:id', (req, res) =>{
-//     var _id=parseInt(req.params.id);
-//     res.json(myList[_id].comments)
-// });
-// app.post('/:id/:type',(req,res)=>{
-//     var _id=parseInt(req.params.id);
-//     if (req.params.type=="chat") {
-//         myList[_id].comments.push({
-//             name:req.body.name,
-//             type:"chat",
-//             data:req.body.data,
-//         })
-//     } else if(req.params.type=="audio"){
-//          if (req.files) {
-//              console.log(req.files);
-             
-//          }
-
-
-//         // myList[_id].comments.push({
-//         //     name:req.body.name,
-//         //     type:"audio",
-//         //     data:req.body.data,
-//         // })
-
-//     }
-//     console.log(myList)
-// });
-// app.listen(port, () => console.log("Example app listening on 3000 port!"))
-
-
-//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
+app.listen(process.env.PORT || 3000, () => console.log("Server 3000 portida ishlayapti !!"));
