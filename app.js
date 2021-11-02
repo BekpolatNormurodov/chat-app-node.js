@@ -66,7 +66,7 @@ app.post('/:id/audio', (req, res) => {
     myList[req.params.id].comment.push({
                name:req.fields.name,
                type:"audio",
-               data:'https://bek-chat-app.herokuapp.com/audio/'+filename.toString(),
+               data:'https://bek-chat-app.herokuapp.com/my-uploads/'+filename.toString(),
                time:req.fields.time,
            });
     res.end();
