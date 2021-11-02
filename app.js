@@ -51,7 +51,6 @@ const storage = multer.diskStorage({
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(express.json());
 
 app.use('/audio',express.static('./my-uploads'))
 app.get('/', async (req, res) => {
