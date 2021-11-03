@@ -62,7 +62,7 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/:id/audio', (req, res) => {
-   
+   console.log(req)
     myList[req.params.id].comment.push({
                name:req.fields.name,
                type:"audio",
