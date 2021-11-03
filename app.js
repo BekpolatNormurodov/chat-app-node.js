@@ -43,6 +43,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       filename = file.originalname
+      console.log(file)
       cb(null, file.originalname)
     }
   })
@@ -62,7 +63,6 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/:id/audio', (req, res) => {
-   console.log(req)
     myList[req.params.id].comment.push({
                name:"oooooo",
                type:"audio",
