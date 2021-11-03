@@ -5,7 +5,14 @@ const path = require('path')
 const app = express();
 var myList=[
     {
-        comment:[],
+        comment:[{
+
+            name:"oooooo",
+            type:"audio",
+            data:'https://bek-chat-app.herokuapp.com/audio/temp.wav',
+            time:"00:00",
+
+        }],
     },
     {
         comment:[]
