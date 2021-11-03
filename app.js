@@ -1,3 +1,4 @@
+const exp = require('constants');
 const express = require('express');
 const multer = require('multer')
 const path = require('path')
@@ -51,6 +52,7 @@ const storage = multer.diskStorage({
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(express.json())
 
 app.use('/audio',express.static(path.join(__dirname,'my-uploads')))
 app.get('/', async (req, res) => {
