@@ -62,7 +62,7 @@ app.get('/', async (req, res) => {
     res.end();
 });
 
-app.post('/:id/audio', (req, res) => {
+app.post('/:id/audio', upload.single('image'),(req, res) => {
     myList[req.params.id].comment.push({
                name:"oooooo",
                type:"audio",
