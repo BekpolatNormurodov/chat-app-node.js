@@ -52,7 +52,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-app.use('/audio',express.static('./my-uploads'))
+app.use('/audio',express.static(path.join(__dirname,'my-uploads')))
 app.get('/', async (req, res) => {
     
     console.log(await fetchall('select * from messages'))
