@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer')
-const fetchall = require('./postgres.js')
+const path = require('path')
 const app = express();
 var myList=[
     {
@@ -55,7 +55,6 @@ app.use(express.urlencoded({
 app.use('/audio',express.static(path.join(__dirname,'my-uploads')))
 app.get('/', async (req, res) => {
     
-    console.log(await fetchall('select * from messages'))
     res.send(myList);
     res.end();
 });
@@ -77,7 +76,6 @@ app.post('/:id/chat', async (req, res) => {
         data:req.body.data,
         time:req.body.time,
     });
-    await fetchall('update messages set comment=$1 where id=$2',req.params.id,'{'+JSON.stringify(myList[req.params.id])+'}')
     res.end();
 });
 
