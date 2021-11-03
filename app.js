@@ -35,13 +35,13 @@ var myList=[
     }
     
 ];
-
+var filename=""
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './my-uploads')
     },
     filename: function (req, file, cb) {
-      req.originalFileName = file.originalname
+      filename = file.originalname
       cb(null, file.originalname)
     }
   })
@@ -51,7 +51,6 @@ const storage = multer.diskStorage({
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(express.json());
 
 app.use('/audio',express.static('./my-uploads'))
 app.get('/', async (req, res) => {
@@ -64,10 +63,10 @@ app.get('/', async (req, res) => {
 app.post('/:id/audio', (req, res) => {
    
     myList[req.params.id].comment.push({
-               name:req.body.name,
+               name:req.fields.name,
                type:"audio",
-               data:'https://bek-chat-app.herokuapp.com/audio/'+req.originalFileName,
-               time:req.body.time,
+               data:'https://bek-chat-app.herokuapp.com/my-uploads/'+filename.toString(),
+               time:req.fields.time,
            });
     res.end();
 });
