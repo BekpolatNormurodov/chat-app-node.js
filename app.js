@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
       cb(null, './my-uploads')
     },
     filename: function (req, file, cb) {
-      filename = file.originalname
+      req.Filename = file.originalname
       console.log(file)
       cb(null, file.originalname)
     }
@@ -66,7 +66,7 @@ app.post('/:id/audio', upload.single('image'),(req, res) => {
     myList[req.params.id].comment.push({
                name:"oooooo",
                type:"audio",
-               data:'https://bek-chat-app.herokuapp.com/audio/'+filename.toString(),
+               data:'https://bek-chat-app.herokuapp.com/audio/'+req.Filename,
                time:"00:00",
            });
     res.end();
