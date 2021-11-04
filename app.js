@@ -2,7 +2,6 @@ const exp = require('constants');
 const express = require('express');
 const multer = require('multer')
 const path = require('path')
-const fs = require('fs')
 const app = express();
 var myList=[
     {
@@ -37,14 +36,15 @@ var myList=[
     }
     
 ];
-var filename=""
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './my-uploads')
     },
     filename: function (req, file, cb) {
-      req.Filename = file.originalname
-      cb(null, file.originalname)
+        let date = new Date().getTime()
+      req.Filename = date +file.originalname
+      cb(null, req.Filename)
     }
   })
   
@@ -69,6 +69,7 @@ app.post('/:id/audio', upload.single('audio'),(req, res) => {
                data:'https://bek-chat-app.herokuapp.com/audio/'+req.Filename,
                time:req.body.time,
            });
+    console.log(req.Filename)
     res.end();
 });
 app.post('/:id/chat', async (req, res) => {
@@ -80,5 +81,4 @@ app.post('/:id/chat', async (req, res) => {
     });
     res.end();
 });
-
 app.listen(process.env.PORT || 3000, () => console.log("Server 3000 portida ishlayapti !!"));
