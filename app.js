@@ -6,14 +6,7 @@ const fs = require('fs')
 const app = express();
 var myList=[
     {
-        comment:[{
-
-            name:"oooooo",
-            type:"audio",
-            data:'https://bek-chat-app.herokuapp.com/audio/temp.wav',
-            time:"00:00",
-
-        }],
+        comment:[],
     },
     {
         comment:[]
@@ -70,7 +63,6 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/:id/audio', upload.single('audio'),(req, res) => {
-    console.log(req.body)
     myList[req.params.id].comment.push({
                name:req.body.name,
                type:"audio",
