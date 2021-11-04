@@ -72,10 +72,10 @@ app.get('/', async (req, res) => {
 app.post('/:id/audio', upload.single('audio'),(req, res) => {
     console.log(req.body)
     myList[req.params.id].comment.push({
-               name:"oooooo",
+               name:req.body.name,
                type:"audio",
                data:'https://bek-chat-app.herokuapp.com/audio/'+req.Filename,
-               time:"00:00",
+               time:req.body.time,
            });
     res.end();
 });
