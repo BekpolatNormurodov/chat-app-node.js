@@ -2,6 +2,7 @@ const exp = require('constants');
 const express = require('express');
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 const app = express();
 var myList=[
     {
@@ -69,7 +70,7 @@ app.get('/', async (req, res) => {
     res.end();
 });
 
-app.post('/:id/audio', upload.single('image'),(req, res) => {
+app.post('/:id/audio', upload.single('audio'),(req, res) => {
     myList[req.params.id].comment.push({
                name:"oooooo",
                type:"audio",
